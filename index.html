@@ -694,10 +694,12 @@
 
   // ---------- 온라인 랭킹 (Supabase) ----------
   // 아래 두 값을 채우면 온라인 랭킹이 켜져요. 비워 두면 게임만 동작해요.
-  const SUPABASE_URL = "";      // 예: https://abcdefgh.supabase.co
-  const SUPABASE_ANON_KEY = ""; // Supabase > Project Settings > API 의 anon public 키
+  const SUPABASE_URL = "https://hdkybudcuzvrzqcjafqq.supabase.co";      // 예: https://abcdefgh.supabase.co
+  const SUPABASE_ANON_KEY = "sb_publishable_W1DpMNcshBcAmbLDKJrEdA_gWbd6igG"; // Supabase > Project Settings > API 의 anon public 키
   const ONLINE = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
-  const HDR = { apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY, "Content-Type": "application/json" };
+  const HDR = { apikey: SUPABASE_ANON_KEY, "Content-Type": "application/json" };
+  // 예전 방식 anon 키(eyJ…)만 Authorization 헤더에 같이 넣고, 새 publishable 키는 apikey 헤더만 쓴다
+  if (SUPABASE_ANON_KEY.startsWith("eyJ")) HDR.Authorization = "Bearer " + SUPABASE_ANON_KEY;
 
   const uuid = () => (crypto.randomUUID ? crypto.randomUUID() :
     "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
